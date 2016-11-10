@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- saved from url=(0104)https://act.greenpeace.org/ea-action/action?ea.client.id=1939&ea.campaign.id=48091&ea.campaign.mode=DEMO -->
+<html lang="en" hola_ext_inject="disabled"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+
+	<link rel="icon" type="image/png" sizes="96x96" href="https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1939/favicon.png?v=1445398665000">
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"  />
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+<script>
+function getParameterByName(name) {
+	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		results = regex.exec(location.search);
+	return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+// Give the URL parameters variable names
+var source = ' '+getParameterByName('utm_source');
+var medium = ' '+getParameterByName('utm_medium');
+var campaign = ' '+getParameterByName('utm_campaign');
+var content = ' '+getParameterByName('utm_content');
+//var campaignid=getParameterByName('ea.campaign.id');
+var campaignid='47141';
+
+function chkexist(){
+	// Put your public token on next line
+	var en_token='YOUR-PUBLIC-TOKEN';
+	// PUT your field name which you want to record their first action on next line
+	$.ajax({
+  		url: 'https://e-activist.com/ea-dataservice/data.service?service=RollCall&token='+en_token+'&contentType=json&dataSet=1&detailRows=20&campaignId='+campaignid,
+  		dataType: "jsonp",
+  		success: function (data) {
+  			var name,city,country='';
+  			json_obj=data.rows;
+  			$.each(json_obj,function( index, value ) {  
+  			  	name='';city='';
+  				$.each(value.columns, function (k , v){
+  					if (v.name==="firstName"){name=v.value;}
+  					if (v.name==="city"){city=v.value;}
+  					if (v.name==="country"){country=v.value;}
+  					});
+  				$('.progressbar').append('<div id="list'+index+'"><span class="flag"><img style="width:20px;" src="flags/'+country.toLowerCase()+'.svg"></span><span class="name"> '+name+' </span></div>' ); 
+  				});			
+  			}
+		});
+	}
+</script>
+<script>
+
+$(document).ready(function(){
+	chkexist();
+	});
+
+</script>
+  
+</head>
+<body>
+
+<div class="progressbar"></div>
+
+
+</body></html>
